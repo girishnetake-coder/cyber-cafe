@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ESI - सायबर कॅफे</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: sans-serif; background: #f0f2f5; color: #333; line-height: 1.6; }
+.top-bar { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px 20px; display: flex; align-items: center; position: sticky; top: 0; z-index: 10; }
+.back-btn { background: rgba(255,255,255,0.2); border: none; color: white; font-size: 20px; width: 40px; height: 40px; border-radius: 50%; margin-right: 12px; cursor: pointer; }
+.top-bar h2 { font-size: 18px; }
+.content { padding: 20px; max-width: 700px; margin: 0 auto; }
+.pay-card { background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); border-radius: 16px; padding: 22px; text-align: center; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.pay-card h3 { font-size: 20px; margin-bottom: 8px; }
+.amt { font-size: 36px; font-weight: bold; color: #c0392b; margin: 6px 0; }
+.upi { background: white; border-radius: 10px; padding: 10px; font-size: 17px; font-weight: bold; color: #2c3e50; margin: 10px 0; word-break: break-all; }
+.qr { width: 180px; height: 180px; background: white; border-radius: 10px; margin: 10px auto; display: block; }
+.pay-btn { display: block; width: 100%; padding: 15px; margin-top: 10px; background: #27ae60; color: white; border: none; border-radius: 12px; font-size: 17px; font-weight: bold; cursor: pointer; text-decoration: none; text-align: center; }
+.confirm-btn { display: block; width: 100%; padding: 13px; margin-top: 8px; background: #3498db; color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: bold; cursor: pointer; }
+.paid-badge { display: none; background: #27ae60; color: white; padding: 12px; border-radius: 10px; margin-top: 10px; font-weight: bold; text-align: center; }
+.section { background: white; border-radius: 12px; padding: 18px; margin-bottom: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.section h3 { color: #4a5568; font-size: 17px; margin-bottom: 10px; }
+.section p, .section li { font-size: 15px; color: #555; margin-bottom: 6px; }
+.section ul { padding-left: 22px; }
+.steps { padding-left: 0; list-style: none; counter-reset: step; }
+.steps li { counter-increment: step; padding: 10px 10px 10px 46px; background: #f8f9fb; border-radius: 10px; margin-bottom: 8px; position: relative; font-size: 15px; }
+.steps li::before { content: counter(step); position: absolute; left: 10px; top: 10px; width: 26px; height: 26px; background: #667eea; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px; }
+.warn { background: #fff3cd; border-left: 4px solid #ffc107; padding: 12px; border-radius: 6px; font-size: 14px; color: #856404; }
+.website-box { background: white; border-radius: 12px; padding: 18px; margin-bottom: 14px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.website-box h3 { font-size: 17px; color: #4a5568; margin-bottom: 10px; }
+.website-btn { display: block; width: 100%; padding: 15px; background: #999; color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: not-allowed; text-decoration: none; text-align: center; }
+.website-btn.active { background: #667eea; cursor: pointer; }
+.footer-note { text-align: center; font-size: 12px; color: #888; padding: 15px 10px; }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+<button class="back-btn" onclick="window.location.href='index.html'">←</button>
+<h2>🏥 ESI (कर्मचारी राज्य विमा)</h2>
+</div>
+
+<div class="content">
+
+<div class="pay-card">
+<h3 id="payTitle">💳 मार्गदर्शन शुल्क</h3>
+<div class="amt" id="payAmt">₹1</div>
+<div id="payContent">
+<p style="font-size:14px; color:#555;">खालील UPI वर पैसे पाठवा किंवा QR स्कॅन करा</p>
+<div style="font-size:13px;color:#555;margin:5px 0;">QR कोडवर टच करा — UPI ॲप उघडेल</div>
+<a href="upi://pay?pa=9822759913@ptsbi&pn=Girish%20Netake&am=1&cu=INR"><img class="qr" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi%3A%2F%2Fpay%3Fpa%3D9822759913%40ptsbi%26pn%3DGirish%20Netake%26am%3D1%26cu%3DINR" alt="QR कोड" style="cursor:pointer;"></a>
+<a href="upi://pay?pa=9822759913@ptsbi&pn=Girish%20Netake&am=1&cu=INR" class="pay-btn">📱 UPI ॲपमध्ये पैसे द्या</a>
+<button class="confirm-btn" onclick="confirmPay()" id="confirmBtn">✅ मी पैसे दिले — पुढे जा</button>
+</div>
+<div class="paid-badge" id="paidBadge">✅ तुम्ही पैसे भरले आहेत — वेबसाईट खाली उघडा</div>
+</div>
+
+<div class="section">
+<h3>📖 ESI म्हणजे काय?</h3>
+<p>ESI (Employee State Insurance) म्हणजे कर्मचारी राज्य विमा. यामध्ये कामगारांना वैद्यकीय सेवा, आजारपणात पगार, अपंगत्व लाभ, प्रसूती लाभ इत्यादी मोफत मिळतात. ज्या कंपन्यांमध्ये ₹21000 पेक्षा कमी पगार असतो तेथे ESI अनिवार्य आहे.</p>
+</div>
+
+<div class="section">
+<h3>🎁 ESI मध्ये काय मिळते?</h3>
+<ul>
+<li>मोफत वैद्यकीय उपचार (स्वतः व कुटुंबासाठी)</li>
+<li>आजारपणात पगार (Sickness Benefit)</li>
+<li>प्रसूती लाभ (Maternity Benefit)</li>
+<li>अपंगत्व लाभ (Disability Benefit)</li>
+<li>अवलंबितांना निवृत्तीवेतन (Dependants Benefit)</li>
+<li>अंत्यसंस्कार खर्च</li>
+</ul>
+</div>
+
+<div class="section">
+<h3>📄 लागणारी माहिती</h3>
+<ul>
+<li>ESI IP क्रमांक (Insurance Number)</li>
+<li>आधार क्रमांक</li>
+<li>बँक खाते क्रमांक + IFSC</li>
+<li>मोबाईल क्रमांक (OTP साठी)</li>
+<li>नियोक्त्याचा (Employer) क्रमांक</li>
+<li>पासपोर्ट साइज फोटो</li>
+</ul>
+</div>
+
+<div class="section">
+<h3>📝 स्टेप-बाय-स्टेप</h3>
+<ol class="steps">
+<li>वरील पैसे भरा (₹1)</li>
+<li>वेबसाईट उघडा बटण दाबा</li>
+<li>ESIC पोर्टल उघडेल</li>
+<li>Insured Person निवडा</li>
+<li>नवीन वापरकर्ता असल्यास Register करा</li>
+<li>IP क्रमांक व मोबाईल टाका, OTP पडताळा</li>
+<li>लॉगिन करा</li>
+<li>e-Pehchan कार्ड डाउनलोड करा</li>
+<li>तक्रार / दावा असल्यास तो भरा</li>
+<li>वैद्यकीय सेवेसाठी जवळचे ESIC दवाखाने शोधा</li>
+</ol>
+</div>
+
+<div class="section">
+<h3>⚠️ सावधानता</h3>
+<div class="warn">
+• IP क्रमांक व पासवर्ड कोणालाही सांगू नका<br>
+• OTP कोणालाही देऊ नका<br>
+• फक्त अधिकृत ESIC वेबसाईटवरच काम करा<br>
+• ESIC चे काम पूर्णपणे मोफत आहे<br>
+• ESI काढून देतो अशा दलालांपासून सावध राहा
+</div>
+</div>
+
+<div class="website-box">
+<h3>🔗 अधिकृत वेबसाईट</h3>
+<p style="font-size:14px; color:#555; margin-bottom:10px;" id="lockNote">पैसे भरल्यावर खालील बटण सुरू होईल</p>
+<button class="website-btn" id="websiteBtn" onclick="openWebsite()">🌐 ESIC पोर्टल उघडा</button>
+</div>
+
+<div class="footer-note">
+⚠️ हे अधिकृत सरकारी ॲप नाही. हे फक्त मार्गदर्शक आहे.<br>
+सर्व कामे संबंधित सरकारी वेबसाईटवरच करावी लागतील.
+</div>
+
+</div>
+
+<script>
+var ESI_URL = "https://www.esic.gov.in/";
+var STORAGE_KEY = "cybercafe_esi_paid";
+
+var FREE_MODE = true;
+function checkPaid() { if (FREE_MODE) { unlockWebsite(); return; }
+  try {
+    var paid = localStorage.getItem(STORAGE_KEY);
+    if (paid && (Date.now() - paid) < 3600000) {
+      unlockWebsite();
+    }
+  } catch(e) {}
+}
+
+function confirmPay() {
+  var sms = prompt("तुमच्या बँकेचा SMS इथे पेस्ट करा"); if (!sms) return; var sl = sms.toLowerCase(); var ok = (sl.indexOf("girish")>-1 || sl.indexOf("ptaxis")>-1 || sl.indexOf("upi")>-1) && (sl.indexOf("rs.1")>-1 || sl.indexOf("rs 1")>-1 || sl.indexOf("inr 1")>-1) && (sl.indexOf("debit")>-1 || sl.indexOf("paid")>-1 || sl.indexOf("sent")>-1 || sl.indexOf("success")>-1); if (!ok) { alert("SMS पडताळणी अयशस्वी - पुन्हा प्रयत्न करा"); return; }
+  if (ok) {
+    try {
+      localStorage.setItem(STORAGE_KEY, Date.now());
+    } catch(e) {}
+    unlockWebsite();
+    alert("धन्यवाद! आता खाली वेबसाईट उघडा बटण दाबा.");
+  }
+}
+
+function unlockWebsite() {
+  document.getElementById("payContent").style.display = "none";
+  document.getElementById("paidBadge").style.display = "block";
+  document.getElementById("payTitle").textContent = "✅ पेमेंट पूर्ण";
+  document.getElementById("payAmt").style.display = "none";
+  var btn = document.getElementById("websiteBtn");
+  btn.classList.add("active");
+  btn.textContent = "🌐 ESIC पोर्टल उघडा";
+  document.getElementById("lockNote").textContent = "खालील बटण दाबा — वेबसाईट नवीन टॅबमध्ये उघडेल";
+}
+
+function openWebsite() {
+  var btn = document.getElementById("websiteBtn");
+  if (!btn.classList.contains("active")) {
+    alert("कृपया आधी ₹1 पैसे भरा.");
+    return;
+  }
+  window.location.href = ESI_URL;
+}
+
+window.onload = function(){ fetch("https://girishnetake-coder.github.io/cyber-cafe-links/links.json").then(function(r){ return r.json(); }).then(function(d){ if(typeof d.free_mode === "boolean") FREE_MODE = d.free_mode; if(d.esi) ESI_URL = d.esi; checkPaid(); }).catch(function(){ checkPaid(); }); };
+</script>
+
+</body>
+</html>

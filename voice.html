@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>मदत - सायबर कॅफे</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: sans-serif; background: #f0f2f5; color: #333; line-height: 1.6; }
+.top-bar { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px 20px; display: flex; align-items: center; position: sticky; top: 0; z-index: 10; }
+.back-btn { background: rgba(255,255,255,0.2); border: none; color: white; font-size: 20px; width: 40px; height: 40px; border-radius: 50%; margin-right: 12px; cursor: pointer; }
+.top-bar h2 { font-size: 18px; }
+.content { padding: 20px; max-width: 700px; margin: 0 auto; }
+.free-badge { background: #27ae60; color: white; padding: 12px; border-radius: 10px; text-align: center; font-weight: bold; margin-bottom: 20px; font-size: 15px; }
+.search-box { background: white; border-radius: 14px; padding: 15px; margin-bottom: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.search-box input { width: 100%; padding: 14px; border: 2px solid #ddd; border-radius: 10px; font-size: 16px; font-family: sans-serif; }
+.search-box input:focus { outline: none; border-color: #667eea; }
+.search-btn { display: block; width: 100%; padding: 14px; margin-top: 10px; background: #667eea; color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; }
+.search-btn:active { background: #5568d3; }
+.section { background: white; border-radius: 12px; padding: 18px; margin-bottom: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.section h3 { color: #4a5568; font-size: 17px; margin-bottom: 12px; }
+.quick-btn { display: block; width: 100%; padding: 14px 15px; margin-bottom: 10px; background: #f8f9fb; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 15px; text-align: left; cursor: pointer; font-family: sans-serif; color: #333; }
+.quick-btn:active { background: #667eea; color: white; border-color: #667eea; }
+.answer { background: #e8f4fd; border-left: 4px solid #2196f3; padding: 14px; border-radius: 8px; font-size: 15px; color: #0d47a1; margin-top: 12px; display: none; line-height: 1.6; }
+.answer.show { display: block; }
+.answer b { color: #667eea; }
+.footer-note { text-align: center; font-size: 12px; color: #888; padding: 15px 10px; }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+<button class="back-btn" onclick="window.location.href='index.html'">←</button>
+<h2>🎤 मदत आणि माहिती</h2>
+</div>
+
+<div class="content">
+
+<div class="free-badge">
+✅ हे पान पूर्णपणे मोफत आहे — कोणतेही शुल्क नाही
+</div>
+
+<div class="search-box">
+<h3 style="margin-bottom:10px; color:#4a5568;">🔍 तुमचा प्रश्न टाइप करा</h3>
+<input type="text" id="questionInput" placeholder="उदा. पोलीस व्हेरिफिकेशन कसे करायचे?" />
+<button class="search-btn" onclick="searchAnswer()">उत्तर शोधा</button>
+<div class="answer" id="answerBox"></div>
+</div>
+
+<div class="section">
+<h3>📋 तयार प्रश्न — एका टॅपवर उत्तर</h3>
+<button class="quick-btn" onclick="showAnswer('police')">👮 पोलीस व्हेरिफिकेशन कसे करायचे?</button>
+<button class="quick-btn" onclick="showAnswer('pf')">💰 PF कसा काढायचा?</button>
+<button class="quick-btn" onclick="showAnswer('esi')">🏥 ESI म्हणजे काय?</button>
+<button class="quick-btn" onclick="showAnswer('bharti')">📝 पोलीस भरती फॉर्म कसा भरायचा?</button>
+<button class="quick-btn" onclick="showAnswer('app')">❓ हे ॲप काय करते?</button>
+<button class="quick-btn" onclick="showAnswer('fees')">💵 किती पैसे लागतात?</button>
+<button class="quick-btn" onclick="showAnswer('data')">🔒 माझा डेटा कुठे जातो?</button>
+</div>
+
+<div class="section">
+<h3>📖 सर्व माहिती एकत्र</h3>
+<div style="padding:12px; background:#f8f9fb; border-radius:10px; margin-bottom:10px; font-size:14px;">
+<b style="color:#667eea;">👮 पोलीस व्हेरिफिकेशन:</b> नोकरी, पासपोर्ट, भाडेकरू नोंदणीसाठी लागते. कागदपत्रे: आधार, पॅन, फोटो, पत्ता पुरावा. वेबसाईट: citizen.mahapolice.gov.in
+</div>
+<div style="padding:12px; background:#f8f9fb; border-radius:10px; margin-bottom:10px; font-size:14px;">
+<b style="color:#667eea;">💰 PF (भविष्य निर्वाह निधी):</b> नोकरी सोडल्यावर काढता येतो. UAN क्रमांक, आधार, बँक माहिती लागते. वेबसाईट: epfindia.gov.in
+</div>
+<div style="padding:12px; background:#f8f9fb; border-radius:10px; margin-bottom:10px; font-size:14px;">
+<b style="color:#667eea;">🏥 ESI (कर्मचारी राज्य विमा):</b> कामगारांना मोफत वैद्यकीय सेवा. IP क्रमांक, आधार, बँक माहिती लागते. वेबसाईट: esic.gov.in
+</div>
+<div style="padding:12px; background:#f8f9fb; border-radius:10px; font-size:14px;">
+<b style="color:#667eea;">📝 पोलीस भरती:</b> वय १८-२८, १२वी उत्तीर्ण. ऑनलाइन अर्ज, शारीरिक चाचणी, लेखी परीक्षा. वेबसाईट: mahapolice.gov.in
+</div>
+</div>
+
+<div class="footer-note">
+⚠️ हे अधिकृत सरकारी ॲप नाही. हे फक्त मार्गदर्शक आहे.<br>
+सर्व कामे संबंधित सरकारी वेबसाईटवरच करावी लागतील.
+</div>
+
+</div>
+
+<script>
+var answers = {
+  police: "पोलीस व्हेरिफिकेशनसाठी मुख्य पानावर 'पोलीस व्हेरिफिकेशन' बटण दाबा. तिथे सर्व माहिती, कागदपत्रे आणि वेबसाईट लिंक आहे. कागदपत्रे: आधार, पॅन, फोटो, पत्ता पुरावा.",
+  pf: "PF काढण्यासाठी मुख्य पानावर 'PF' बटण दाबा. UAN क्रमांक, आधार आणि बँक माहिती लागेल. वेबसाईट: epfindia.gov.in",
+  esi: "ESI म्हणजे कर्मचारी राज्य विमा. कामगारांना मोफत वैद्यकीय सेवा मिळते. मुख्य पानावर 'ESI' बटण दाबा. IP क्रमांक आणि आधार लागेल.",
+  bharti: "पोलीस भरतीसाठी मुख्य पानावर 'पोलीस भरती' बटण दाबा. तिथे पात्रता, अर्ज प्रक्रिया आणि वेबसाईट लिंक आहे. वय १८-२८, १२वी उत्तीर्ण.",
+  app: "हे ॲप सरकारी कामे घरबसल्या, मोफत करण्यासाठी मार्गदर्शन करते. सायबर कॅफेची गरज नाही. पोलीस व्हेरिफिकेशन, PF, ESI, पोलीस भरती — सर्व एकाच ठिकाणी.",
+  fees: "फक्त ₹1 प्रति काम. सायबर कॅफे ₹50-100 घेतो, आम्ही फक्त ₹1. आणि हे मदत पान पूर्णपणे मोफत आहे.",
+  data: "कोणताही डेटा आमच्याकडे जात नाही. सर्व तुमच्या फोनमध्येच राहते. सरकारी वेबसाईटवरच फॉर्म भरला जातो — तो डेटा सरकारकडे जातो, आमच्याकडे नाही."
+};
+
+function showAnswer(key) {
+  var box = document.getElementById("answerBox");
+  box.innerHTML = "<b>उत्तर:</b><br>" + answers[key];
+  box.classList.add("show");
+  box.scrollIntoView({behavior: "smooth", block: "center"});
+}
+
+function searchAnswer() {
+  var input = document.getElementById("questionInput").value.toLowerCase();
+  var box = document.getElementById("answerBox");
+  if (!input.trim()) {
+    box.innerHTML = "कृपया प्रश्न टाइप करा किंवा खालील तयार प्रश्नांवर टॅप करा.";
+    box.classList.add("show");
+    return;
+  }
+  var found = "";
+  if (input.indexOf("पोलीस") > -1 && input.indexOf("व्हेरि") > -1) found = answers.police;
+  else if (input.indexOf("पोलीस") > -1 && (input.indexOf("भरती") > -1 || input.indexOf("फॉर्म") > -1)) found = answers.bharti;
+  else if (input.indexOf("pf") > -1 || input.indexOf("पीएफ") > -1 || input.indexOf("भविष्य") > -1 || input.indexOf("निधी") > -1) found = answers.pf;
+  else if (input.indexOf("esi") > -1 || input.indexOf("ईएसआय") > -1 || input.indexOf("विमा") > -1) found = answers.esi;
+  else if (input.indexOf("पैसे") > -1 || input.indexOf("फी") > -1 || input.indexOf("शुल्क") > -1 || input.indexOf("किती") > -1) found = answers.fees;
+  else if (input.indexOf("डेटा") > -1 || input.indexOf("data") > -1 || input.indexOf("माहिती") > -1) found = answers.data;
+  else if (input.indexOf("ॲप") > -1 || input.indexOf("app") > -1 || input.indexOf("काय") > -1) found = answers.app;
+  else found = "माफ करा, हा प्रश्न समजला नाही. कृपया खालील तयार प्रश्नांवर टॅप करा, किंवा 'पोलीस', 'PF', 'ESI', 'भरती' असा शब्द टाइप करा.";
+  box.innerHTML = "<b>उत्तर:</b><br>" + found;
+  box.classList.add("show");
+}
+</script>
+
+</body>
+</html>

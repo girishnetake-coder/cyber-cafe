@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>सायबर कॅफे</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+  }
+  .header {
+    text-align: center;
+    color: white;
+    margin-bottom: 25px;
+    padding: 15px;
+  }
+  .header h1 {
+    font-size: 28px;
+    margin-bottom: 8px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  }
+  .header p {
+    font-size: 15px;
+    opacity: 0.95;
+  }
+  .disclaimer {
+    background: #fff3cd;
+    border-left: 5px solid #ffc107;
+    padding: 12px 15px;
+    border-radius: 8px;
+    font-size: 13px;
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+  .menu-btn {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    border: none;
+    border-radius: 14px;
+    background: white;
+    color: #333;
+    font-size: 17px;
+    font-weight: 600;
+    text-align: left;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: transform 0.15s, box-shadow 0.15s;
+    cursor: pointer;
+  }
+  .menu-btn:active {
+    transform: scale(0.97);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+  .icon {
+    font-size: 26px;
+    margin-right: 15px;
+    width: 40px;
+    text-align: center;
+  }
+  .btn-text { flex: 1; }
+  .btn-text small {
+    display: block;
+    font-size: 12px;
+    color: #777;
+    font-weight: 400;
+    margin-top: 3px;
+  }
+  .arrow { color: #bbb; font-size: 20px; }
+  .footer {
+    text-align: center;
+    color: white;
+    font-size: 12px;
+    margin-top: 25px;
+    opacity: 0.85;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🖥️ सायबर कॅफे</h1>
+  <p style="font-size:14px; background:#e8f4fd; color:#0d47a1; padding:10px; border-radius:8px; margin-top:10px; line-height:1.5; opacity:1;">स्वागत आहे! सुरुवातीच्या काळात ही सेवा <b>मोफत</b> आहे. पुढे काही शुल्क लागू झाल्यास आम्ही तुम्हाला आधीच कळवू. कोणतेही छुपे शुल्क नाही.</p>
+</div>
+
+<div class="disclaimer">
+  <b>⚠️ सूचना:</b> हे अधिकृत सरकारी ॲप नाही. हे फक्त मार्गदर्शक आहे. कोणतेही दाखले आम्ही देत नाही. सर्व कामे संबंधित सरकारी वेबसाईटवरच करावी लागतील.
+</div>
+
+<button class="menu-btn" onclick="window.location.href='police.html'">
+  <span class="icon">👮</span>
+  <span class="btn-text">पोलीस व्हेरिफिकेशन<small>कागदपत्रे व पोर्टल लिंक</small></span>
+  <span class="arrow">›</span>
+</button>
+
+<button class="menu-btn" onclick="window.location.href='pf.html'">
+  <span class="icon">💰</span>
+  <span class="btn-text">PF (भविष्य निर्वाह निधी)<small>माहिती व EPFO लिंक</small></span>
+  <span class="arrow">›</span>
+</button>
+
+<button class="menu-btn" onclick="window.location.href='esi.html'">
+  <span class="icon">🏥</span>
+  <span class="btn-text">ESI (कर्मचारी राज्य विमा)<small>माहिती व पोर्टल लिंक</small></span>
+  <span class="arrow">›</span>
+</button>
+
+<button class="menu-btn" onclick="window.location.href='police-bharti.html'">
+  <span class="icon">📝</span>
+  <span class="btn-text">पोलीस भरती<small>फॉर्म व निकाल पाहणे</small></span>
+  <span class="arrow">›</span>
+</button>
+
+<button class="menu-btn" onclick="window.location.href='voice.html'">
+  <span class="icon">🎤</span>
+  <span class="btn-text">व्हॉईस कमांड<small>सर्व माहिती ऐका</small></span>
+  <span class="arrow">›</span>
+</button>
+
+<div class="footer">
+  सायबर कॅफे | मोफत मार्गदर्शक ॲप
+</div>
+
+</body>
+</html>
+

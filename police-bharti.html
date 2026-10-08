@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>पोलीस भरती - सायबर कॅफे</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: sans-serif; background: #f0f2f5; color: #333; line-height: 1.6; }
+.top-bar { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px 20px; display: flex; align-items: center; position: sticky; top: 0; z-index: 10; }
+.back-btn { background: rgba(255,255,255,0.2); border: none; color: white; font-size: 20px; width: 40px; height: 40px; border-radius: 50%; margin-right: 12px; cursor: pointer; }
+.top-bar h2 { font-size: 18px; }
+.content { padding: 20px; max-width: 700px; margin: 0 auto; }
+.pay-card { background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); border-radius: 16px; padding: 22px; text-align: center; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.pay-card h3 { font-size: 20px; margin-bottom: 8px; }
+.amt { font-size: 36px; font-weight: bold; color: #c0392b; margin: 6px 0; }
+.upi { background: white; border-radius: 10px; padding: 10px; font-size: 17px; font-weight: bold; color: #2c3e50; margin: 10px 0; word-break: break-all; }
+.qr { width: 180px; height: 180px; background: white; border-radius: 10px; margin: 10px auto; display: block; }
+.pay-btn { display: block; width: 100%; padding: 15px; margin-top: 10px; background: #27ae60; color: white; border: none; border-radius: 12px; font-size: 17px; font-weight: bold; cursor: pointer; text-decoration: none; text-align: center; }
+.confirm-btn { display: block; width: 100%; padding: 13px; margin-top: 8px; background: #3498db; color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: bold; cursor: pointer; }
+.paid-badge { display: none; background: #27ae60; color: white; padding: 12px; border-radius: 10px; margin-top: 10px; font-weight: bold; text-align: center; }
+.section { background: white; border-radius: 12px; padding: 18px; margin-bottom: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.section h3 { color: #4a5568; font-size: 17px; margin-bottom: 10px; }
+.section p, .section li { font-size: 15px; color: #555; margin-bottom: 6px; }
+.section ul { padding-left: 22px; }
+.steps { padding-left: 0; list-style: none; counter-reset: step; }
+.steps li { counter-increment: step; padding: 10px 10px 10px 46px; background: #f8f9fb; border-radius: 10px; margin-bottom: 8px; position: relative; font-size: 15px; }
+.steps li::before { content: counter(step); position: absolute; left: 10px; top: 10px; width: 26px; height: 26px; background: #667eea; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px; }
+.warn { background: #fff3cd; border-left: 4px solid #ffc107; padding: 12px; border-radius: 6px; font-size: 14px; color: #856404; }
+.website-box { background: white; border-radius: 12px; padding: 18px; margin-bottom: 14px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.website-box h3 { font-size: 17px; color: #4a5568; margin-bottom: 10px; }
+.website-btn { display: block; width: 100%; padding: 15px; background: #999; color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: not-allowed; text-decoration: none; text-align: center; }
+.website-btn.active { background: #667eea; cursor: pointer; }
+.update-box { background: #e8f4fd; border-left: 4px solid #2196f3; padding: 12px; border-radius: 6px; font-size: 14px; color: #0d47a1; margin-top: 8px; }
+.update-box h4 { font-size: 15px; margin-bottom: 6px; color: #0d47a1; }
+.link-item { background: #f8f9fb; border-radius: 8px; padding: 10px 12px; margin-bottom: 8px; font-size: 14px; word-break: break-all; }
+.link-item b { color: #2c3e50; }
+.footer-note { text-align: center; font-size: 12px; color: #888; padding: 15px 10px; }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+<button class="back-btn" onclick="window.location.href='index.html'">←</button>
+<h2>📝 पोलीस भरती</h2>
+</div>
+
+<div class="content">
+
+<div class="pay-card">
+<h3 id="payTitle">💳 मार्गदर्शन शुल्क</h3>
+<div class="amt" id="payAmt">₹1</div>
+<div id="payContent">
+<p style="font-size:14px; color:#555;">खालील UPI वर पैसे पाठवा किंवा QR स्कॅन करा</p>
+<div style="font-size:13px;color:#555;margin:5px 0;">QR कोडवर टच करा — UPI ॲप उघडेल</div>
+<a href="upi://pay?pa=9822759913@ptsbi&pn=Girish%20Netake&am=1&cu=INR"><img class="qr" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi%3A%2F%2Fpay%3Fpa%3D9822759913%40ptsbi%26pn%3DGirish%20Netake%26am%3D1%26cu%3DINR" alt="QR कोड" style="cursor:pointer;"></a>
+<a href="upi://pay?pa=9822759913@ptsbi&pn=Girish%20Netake&am=1&cu=INR" class="pay-btn">📱 UPI ॲपमध्ये पैसे द्या</a>
+<button class="confirm-btn" onclick="confirmPay()" id="confirmBtn">✅ मी पैसे दिले — पुढे जा</button>
+</div>
+<div class="paid-badge" id="paidBadge">✅ तुम्ही पैसे भरले आहेत — वेबसाईट खाली उघडा</div>
+</div>
+
+<div class="section">
+<h3>📖 पोलीस भरती म्हणजे काय?</h3>
+<p>महाराष्ट्र राज्य पोलीस दलामध्ये पोलीस शिपाई, पोलीस उपनिरीक्षक, चालक, इत्यादी पदांसाठी भरती प्रक्रिया राबवली जाते. ऑनलाइन अर्ज, शारीरिक चाचणी, लेखी परीक्षा, कागदपत्र पडताळणी अशा टप्प्यांतून उमेदवारांची निवड होते.</p>
+</div>
+
+<div class="section">
+<h3>📄 पात्रता</h3>
+<ul>
+<li>वय: १८ ते २८ वर्षे (पदानुसार बदलते)</li>
+<li>शिक्षण: १२वी उत्तीर्ण (पदानुसार)</li>
+<li>मराठी भाषेचे ज्ञान आवश्यक</li>
+<li>शारीरिक क्षमता मानके पूर्ण करणे आवश्यक</li>
+<li>महाराष्ट्राचे रहिवासी</li>
+</ul>
+</div>
+
+<div class="section">
+<h3>🌐 अधिकृत वेबसाईट</h3>
+<div class="link-item">
+<b>महाराष्ट्र पोलीस:</b><br>
+https://www.mahapolice.gov.in/
+</div>
+<div class="link-item">
+<b>भरती पोर्टल (MAHAT):</b><br>
+https://policerecruitment2025.mahait.org/
+</div>
+<div class="link-item">
+<b>महाराष्ट्र पोलीस भरती पान:</b><br>
+https://www.mahapolice.gov.in/police-recruitment/
+</div>
+</div>
+
+<div class="section">
+<h3>📝 स्टेप-बाय-स्टेप</h3>
+<ol class="steps">
+<li>वरील पैसे भरा (₹1)</li>
+<li>"वेबसाईट उघडा" बटण दाबा</li>
+<li>MAHAT भरती पोर्टल उघडेल</li>
+<li>नवीन वापरकर्ता असल्यास "Register" करा</li>
+<li>मोबाईल व ईमेल टाका, OTP पडताळा</li>
+<li>लॉगिन करा</li>
+<li>"पोलीस भरती" अर्ज निवडा</li>
+<li>फॉर्म भरा, फोटो व सही अपलोड करा</li>
+<li>अर्ज शुल्क ऑनलाइन भरा</li>
+<li>अर्ज क्रमांक सेव्ह करा</li>
+<li>प्रवेशपत्र (Hall Ticket) डाउनलोड करा</li>
+<li>शारीरिक चाचणी, लेखी परीक्षा द्या</li>
+<li>निकाल अधिकृत वेबसाईटवर पहा</li>
+</ol>
+</div>
+
+<div class="section">
+<h3>⚠️ सावधानता</h3>
+<div class="warn">
+• कोणालाही OTP सांगू नका<br>
+• फी फक्त अधिकृत वेबसाईटवरच भरा<br>
+• "भरती करून देतो" अशा दलालांपासून सावध राहा<br>
+• महा ई-सेवा केंद्रावरून (CSC) अर्ज भरता येतो<br>
+• शारीरिक चाचणीची तयारी आधीच करा
+</div>
+</div>
+
+<div class="section">
+<h3>🔄 वेबसाईट अपडेट</h3>
+<div class="update-box">
+<h4>📌 कसे अपडेट करायचे</h4>
+<p>जेव्हा वेबसाईट लिंक बदलेल, तेव्हा खालील ठिकाणी बदल करा:</p>
+<p>१. <b>अधिकृत वेबसाईट</b> विभागात नवीन लिंक टाका.</p>
+<p>२. <b>स्टेप-बाय-स्टेप</b> मधील माहिती अद्ययावत करा.</p>
+<p>३. हे पान <b>police-bharti.html</b> मध्ये आहे.</p>
+<p>४. बदल केल्यावर <b>Ctrl + O</b> ने जतन करा.</p>
+</div>
+<div class="update-box" style="background:#fff3cd; border-left-color:#ffc107; color:#856404; margin-top:10px;">
+<h4>📅 शेवटचे अपडेट</h4>
+<p>६ ऑक्टोबर २०२६</p>
+<p>पुढील अपडेट: भरती जाहिरात आल्यावर</p>
+</div>
+</div>
+
+<div class="website-box">
+<h3>🔗 अधिकृत वेबसाईट</h3>
+<p style="font-size:14px; color:#555; margin-bottom:10px;" id="lockNote">पैसे भरल्यावर खालील बटण सुरू होईल</p>
+<button class="website-btn" id="websiteBtn" onclick="openWebsite()">🌐 पोलीस भरती पोर्टल उघडा</button>
+</div>
+
+<div class="footer-note">
+⚠️ हे अधिकृत सरकारी ॲप नाही. हे फक्त मार्गदर्शक आहे.<br>
+सर्व कामे संबंधित सरकारी वेबसाईटवरच करावी लागतील.
+</div>
+
+</div>
+
+<script>
+var BHARTI_URL = "https://policerecruitment2025.mahait.org/";
+var STORAGE_KEY = "cybercafe_bharti_paid";
+
+var FREE_MODE = true;
+function checkPaid() { if (FREE_MODE) { unlockWebsite(); return; }
+  try {
+    var paid = localStorage.getItem(STORAGE_KEY);
+    if (paid && (Date.now() - paid) < 3600000) {
+      unlockWebsite();
+    }
+  } catch(e) {}
+}
+
+function confirmPay() {
+  var sms = prompt("तुमच्या बँकेचा SMS इथे पेस्ट करा");
+  if (!sms) return;
+  var sl = sms.toLowerCase();
+  var ok = (sl.indexOf("girish")>-1 || sl.indexOf("ptaxis")>-1 || sl.indexOf("upi")>-1) && (sl.indexOf("rs.1")>-1 || sl.indexOf("rs 1")>-1 || sl.indexOf("inr 1")>-1) && (sl.indexOf("debit")>-1 || sl.indexOf("paid")>-1 || sl.indexOf("sent")>-1 || sl.indexOf("success")>-1);
+  if (!ok) { alert("SMS पडताळणी अयशस्वी - पुन्हा प्रयत्न करा"); return; }
+  try {
+    localStorage.setItem(STORAGE_KEY, Date.now());
+  } catch(e) {}
+  unlockWebsite();
+  alert("धन्यवाद! आता खाली 'वेबसाईट उघडा' बटण दाबा.");
+}
+
+function unlockWebsite() {
+  document.getElementById("payContent").style.display = "none";
+  document.getElementById("paidBadge").style.display = "block";
+  document.getElementById("payTitle").textContent = "✅ पेमेंट पूर्ण";
+  document.getElementById("payAmt").style.display = "none";
+  var btn = document.getElementById("websiteBtn");
+  btn.classList.add("active");
+  btn.textContent = "🌐 पोलीस भरती पोर्टल उघडा";
+  document.getElementById("lockNote").textContent = "खालील बटण दाबा — वेबसाईट नवीन टॅबमध्ये उघडेल";
+}
+
+function openWebsite() {
+  var btn = document.getElementById("websiteBtn");
+  if (!btn.classList.contains("active")) {
+    alert("कृपया आधी ₹1 पैसे भरा.");
+    return;
+  }
+  window.location.href = BHARTI_URL;
+}
+
+window.onload = function(){ fetch("https://girishnetake-coder.github.io/cyber-cafe-links/links.json").then(function(r){ return r.json(); }).then(function(d){ if(typeof d.free_mode === "boolean") FREE_MODE = d.free_mode; if(d.police_bharti) BHARTI_URL = d.police_bharti; checkPaid(); }).catch(function(){ checkPaid(); }); };
+</script>
+
+</body>
+</html>
